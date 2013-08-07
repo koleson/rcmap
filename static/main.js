@@ -40,7 +40,7 @@ var highlight_country = function(country_name) {
                       .style('stroke', '#888')
                       .transition()
                       .duration(5000)
-                      .style('fill', '#000')
+                      .style('fill', '#999')
                       .style('stroke-width', '1px')
                       .style('stroke', '#fff');
 };
