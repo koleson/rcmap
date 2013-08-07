@@ -198,7 +198,7 @@ wikipediaSocket.init = function(ws_url, lid) {
                             loc_str = fgi_resp.city + ' (' + loc_str + ')';
                         }*/
                         //log_rc_str = 'Someone in <span class="loc">' + loc_str + '</span> bought tickets to "<a href="' + data.url + '" target="_blank">' + data.page_title + '</a>" <span class="lang">(' + lid + ')</span>';
-                        log_rc_str = 'Someone bought tickets to "<a href="' + data.eid + '" target="_blank">' + data.eventName + '</a>" </span>';
+                        log_rc_str = 'Someone bought tickets to "<a href="' + data.eid + '" target="_blank">' + data[0].name + '</a>" </span>';
                         log_rc(log_rc_str, RC_LOG_SIZE);
                         //console.log('An editor in ' + loc_str + ' edited "' + data.page_title + '"')
                         $('.bubbles')
