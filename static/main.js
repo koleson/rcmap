@@ -137,7 +137,7 @@ wikipediaSocket.init = function(ws_url, lid) {
           this.connection.close();
 
         if ('WebSocket' in window) {
-            var connection = new ReconnectingWebSocket(ws_url);
+            var connection = new ReconnectingWebSocket(ws_url, "echo-protocol");
             this.connection = connection;
             connection.onopen = function() {
                 window.console && console.log('Connection open to ' + lid);
