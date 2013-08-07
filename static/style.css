@@ -108,8 +108,9 @@ label {
     color: #cc4731;
 }
 #map {
-float: left;
-    height: 800px;
+	float: left;
+	vertical-align: top;
+    height: 600px;
     width: 1600px;
 }
 
