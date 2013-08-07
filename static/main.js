@@ -143,7 +143,7 @@ wikipediaSocket.init = function(ws_url, lid) {
                 window.console && console.log('Connection open to ' + lid);
                 $('#' + lid + '-status').html('(connected)');
                 if (testJSON == true) { 
-                	setTimeout(function () { connection.send('[{"venue_countrycode": "US", "gross": "31.74", "name": "FOAMFEST 3", "venue_location": ["41.001276", "-73.85543999999999"], "event_id": "7360711", "changed": "2013-08-06 19:42:19", "order_id": "192433847", "payment_type": "paypal", "venue_countryname": "United States"}, ]'); }, 1000);
+                	setTimeout(function () { connection.send('[{"venue_countrycode": "US", "gross": "31.74", "name": "FOAMFEST 3", "venue_location": ["41.001276", "-73.85543999999999"], "event_id": "7360711", "changed": "2013-08-06 19:42:19", "order_id": "192433847", "payment_type": "paypal", "venue_countryname": "United States"} ]'); }, 1000);
                 	/*
                 	setTimeout(function () { connection.send('{ "eventName": "event name 2", "latitude": 31.77523, "longitude": -102.39963, "countryName": "United States" }'); }, 2000);
                 	
@@ -173,6 +173,7 @@ wikipediaSocket.init = function(ws_url, lid) {
                 try {
                 	window.console && console.log(resp.data);
                     data = JSON.parse(resp.data);
+                    window.console && console.log(data);
                 } catch (e) {
                     window.console && console.log(resp);
                     return;
@@ -183,9 +184,9 @@ wikipediaSocket.init = function(ws_url, lid) {
                 // 6 aug 2013 16h39 kmo
                 window.console && console.log('got message');
                 
-                if (data) {
+                if (data[0]) {
                     window.console && console.log('data acquired');
-                    if (data.latitude && data.longitude) {
+                    if (data[0].venue_location[0] && data[0].venue_location[1]) {
                         window.console && console.log('popping a bubble');
                         world_map.options.bubbles = world_map.options.bubbles.slice(-20);
                         
@@ -216,12 +217,12 @@ wikipediaSocket.init = function(ws_url, lid) {
                                 country_name: data[0].venue_countryname,
                                 fillKey: "add",
                             }]);
-                        country_hl = highlight_country(data.countryName);
+                        country_hl = highlight_country(data[0].venue_countryname);
 
                         if (!country_hl[0][0]) {
-                            country_hl = highlight_country(country_name_map[data.countryName]);
+                            country_hl = highlight_country(country_name_map[data[0].venue_countryname]);
                             if (!country_hl[0][0] && window.console) {
-                                console.log('Could not highlight country: ' + data.countryName);
+                                console.log('Could not highlight country: ' + data[0].venue_countryname);
                             }
                         }
                     } else {
