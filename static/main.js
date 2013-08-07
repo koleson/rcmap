@@ -143,13 +143,15 @@ wikipediaSocket.init = function(ws_url, lid) {
                 window.console && console.log('Connection open to ' + lid);
                 $('#' + lid + '-status').html('(connected)');
                 if (testJSON == true) { 
-                	setTimeout(function () { connection.send('{ "eventName": "event name 1", "latitude": 37.77523, "longitude": -122.39963, "countryName": "United States" }'); }, 1000);
+                	setTimeout(function () { connection.send('[{"venue_countrycode": "US", "gross": "31.74", "name": "FOAMFEST 3", "venue_location": ["41.001276", "-73.85543999999999"], "event_id": "7360711", "changed": "2013-08-06 19:42:19", "order_id": "192433847", "payment_type": "paypal", "venue_countryname": "United States"}, ]'); }, 1000);
+                	/*
                 	setTimeout(function () { connection.send('{ "eventName": "event name 2", "latitude": 31.77523, "longitude": -102.39963, "countryName": "United States" }'); }, 2000);
                 	
                 	setTimeout(function () { connection.send('{ "eventName": "event brazil", "latitude": -17.77523, "longitude": -42.39963, "countryName": "Brazil" }'); }, 5000);
                 	setTimeout(function () { connection.send('{ "eventName": "event france", "latitude": 43.77523, "longitude": 4.39963, "countryName": "France" }'); }, 5300);
                 	setTimeout(function () { connection.send('{ "eventName": "event yellowstone", "latitude": 43.79868, "longitude": -110.067902, "countryName": "United States" }'); }, 9000);
                 	setTimeout(function () { connection.send('{ "eventName": "event nyc", "latitude": 40.72468, "longitude": -74.00597, "countryName": "United States" }'); }, 9200);
+                	*/
                 }
             };
 
