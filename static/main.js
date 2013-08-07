@@ -142,10 +142,8 @@ wikipediaSocket.init = function(ws_url, lid) {
             connection.onopen = function() {
                 window.console && console.log('Connection open to ' + lid);
                 
-                /*var d = new Date();
-                var timeString = "" + d.getHours() + ":" d.getMinutes();
-                $('#updatedtime').html(timeString);
-                */
+                
+                
                 $('#' + lid + '-status').html('(connected)');
                 if (testJSON == true) { 
                 	setTimeout(function () { connection.send('[{"venue_countrycode": "US", "gross": "31.74", "name": "FOAMFEST 3", "venue_location": ["41.001276", "-73.85543999999999"], "event_id": "7360711", "changed": "2013-08-06 19:42:19", "order_id": "192433847", "payment_type": "paypal", "venue_countryname": "United States"} ]'); }, 1000);
@@ -153,10 +151,11 @@ wikipediaSocket.init = function(ws_url, lid) {
                 	setTimeout(function () { connection.send('[{"venue_countrycode": "US", "gross": "31.74", "name": "Event 3", "venue_location": ["-17.77523", "-42.85543999999999"], "event_id": "7360711", "changed": "2013-08-06 19:42:19", "order_id": "192433847", "payment_type": "paypal", "venue_countryname": "Brazil"} ]'); }, 2300);
                 	setTimeout(function () { connection.send('[{"venue_countrycode": "US", "gross": "31.74", "name": "Event 4", "venue_location": ["43.77523", "4.285543999999999"], "event_id": "7360711", "changed": "2013-08-06 19:42:19", "order_id": "192433847", "payment_type": "paypal", "venue_countryname": "France"} ]'); }, 3800);
                 	
-                	setTimeout(function () { connection.send('[{"venue_countrycode": "US", "gross": "31.74", "name": "Event 5", "venue_location": ["43.77523", "-110.067"], "event_id": "7360711", "changed": "2013-08-06 19:42:19", "order_id": "192433847", "payment_type": "paypal", "venue_countryname": "France"} ]'); }, 3800);
+                	setTimeout(function () { connection.send('[{"venue_countrycode": "US", "gross": "31.74", "name": "Event 5", "venue_location": ["43.77523", "-110.067"], "event_id": "7360711", "changed": "2013-08-06 19:42:19", "order_id": "192433847", "payment_type": "paypal", "venue_countryname": "United States"} ]'); }, 3800);
+                	
+                	setTimeout(function () { connection.send('[{"venue_countrycode": "US", "gross": "31.74", "name": "Yellowstone Event Again", "venue_location": ["43.77523", "-110.067"], "event_id": "7360711", "changed": "2013-08-06 19:42:19", "order_id": "192433847", "payment_type": "paypal", "venue_countryname": "United States"} ]'); }, 3800);
                 	/*
-                	                	
-                                           	setTimeout(function () { connection.send('{ "eventName": "event yellowstone", "latitude": 43.79868, "longitude": -110.067902, "countryName": "United States" }'); }, 9000);
+                	                
                 	setTimeout(function () { connection.send('{ "eventName": "event nyc", "latitude": 40.72468, "longitude": -74.00597, "countryName": "United States" }'); }, 9200);
                 	*/
                 }
