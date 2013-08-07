@@ -164,24 +164,24 @@
         <div id="flash_content" style="display: none; width: 400px; height: 400px; background-color: #000; position:absolute; bottom:0px; left:10px;"></div>
     </div>
     <div class="bg">
-      <div class="rc-list">
+      <div class="rc-list" style="width: 300px; float: left;">
         <h3>Recent orders</h3>
         <ul id="rc-list">
         </ul>
-        <div class="note">
-          <p id="edit_counter"></p>
-        </div>
-        <div class="compare" style="background-color: white; height: 200px; width: 100%;">
+      </div>
+      <div class="compare" style="float: right; height: 200px; width: 800px;">
         	<div style="background-color:white; width: 40%; float: left;">
-        	<p>Today as of 11:30 PM</p>
-			<span style="font-size: 50pt; font-family: 'Omnes Semibold';">$1,782,421.33</span><br />
+        	<p>Today as of <span id="updatedtime">11:30 PM</span></p>
+			<span style="font-size: 30pt; font-family: 'Omnes Semibold';">$1,782,421.33</span><br />
 			<p>Record: $5,773,493.94</p>
         	</div>
-        	<div style="background-color: white; float: right; width: 40%">
-        	Yesterday: +10.2%<br />
-        	Last Week: +21.8%<br />
-        	Last Month: +5.5%<br />
-        	Last Year: +240.1%<br /> 
+        	<div style="float: right; width: 40%; margin-top: 10px;">
+        	<table style="width: 200px;">
+        	<tr><td>Yesterday:</td><td><span style="color: green;">+10.8%</span></td></tr>
+        	<tr><td>Last Week:</td><td><span style="color: green;">+21.8%</span></td></tr>
+        	<tr><td>Last Month:</td><td><span style="color: green;">+25.9%</span></td></tr>
+        	<tr><td>Last Year:</td><td><span style="color: green;">+70.2%</span></td></tr>
+        	</table>
         	</div>
         </div>
       </div>
@@ -189,24 +189,7 @@
     </div>
     
     </div>
-    <div class="foot" style="display: none;">
-      <h3>Languages</h3>
-      <div id="lang-boxes"></div>
-      <div class='clear'><br/></div>
-      <br/>
-      <h3><a name="about"></a>What is this map?</h3>
-      <p><a href='http://blog.hatnote.com/post/49342528753/wikipedia-recent-changes-map'>Read more</a> about this project.</p>
-      
-      <p>
-        Built using <a href="http://d3js.org">d3</a>, <a href="http://datamaps.github.io">DataMaps</a>,
-        <a href="https://github.com/fiorix/freegeoip">freegeoip.net</a>, and
-        the <a href="http://meta.wikimedia.org/wiki/Research:Data#IRC_Feeds">Wikimedia RecentChanges IRC feed</a>,
-        broadcast through <a href="https://github.com/hatnote/wikimon">wikimon</a>.
-        Source <a href="https://github.com/hatnote/rcmap">available on github</a>.
-      </p>
-      <p>Built by <a href="https://github.com/slaporte">Stephen LaPorte</a> and <a href="https://github.com/mahmoud">Mahmoud Hashemi</a>.</p>
-    </div>
-    </div>
+
     
 </body>
 </html>

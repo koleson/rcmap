@@ -4,7 +4,7 @@
 
 body {
     font-family: "Omnes";
-    font-size: 20pt;
+    font-size: 14pt;
     background-color: #f7f7f7;
 }
 h1 {
@@ -27,7 +27,7 @@ label {
 }
 .content {
     margin: 1em auto 4em auto;
-    width: 1600px;
+    width: 1200px;
     position:relative;
 }
 .popup-box {	
@@ -52,13 +52,12 @@ label {
     margin: 1em;
 }
 .rc-list {
-    border: 1px solid #2f6fab;
-    background: #f8f8f8;
     list-style-type: none;
     margin: 0.5em;
     line-height: 1.5em;
     font-size: .8em;
     overflow: hidden;
+    clear: left;
 }
 .rc-list ul {
     height: 6em;
@@ -66,9 +65,7 @@ label {
 .rc-list h3 {
     padding: .5em;
     margin: 0;
-    background: #fff;
-    border-bottom: 1px solid #d8e6ec;
-    font-size: 2em;
+    font-size: 1.5em;
 }
 .note {
     margin: 0;
@@ -110,8 +107,8 @@ label {
 #map {
 	float: left;
 	vertical-align: top;
-    height: 600px;
-    width: 1600px;
+    height: 500px;
+    width: 1200px;
 }
 
 #loading {
