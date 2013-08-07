@@ -20,7 +20,7 @@ var country_name_map = {
          'United States': 'United States of America'
 };
 
-var total_edits = 0;
+var total_events = 0;
 var edit_times = [];
 var edit_intervals = [];
 var world_map;
@@ -35,10 +35,14 @@ var log_rc = function(rc_str, limit) {
 
 var highlight_country = function(country_name) {
     return d3.select('path[data-country-name="' + country_name + '"]')
-                      .style('fill', '#eddc4e')
+                      .style('fill', '#46d6bd')
+                      .style('stroke-width', '2px')
+                      .style('stroke', '#888')
                       .transition()
                       .duration(5000)
-                      .style('fill', '#ccc');
+                      .style('fill', '#ccc')
+                      .style('stroke-width', '1px')
+                      .style('stroke', '#fff');
 };
 
 var get_country_names = function() {
@@ -65,51 +69,6 @@ var addBubbles = function(bubbles) {
         .data(bubbles)
         .enter()
         .append('svg:circle')
-        .on('mouseover', function(datum) {
-            var hoverover = self.$el.find('.hoverover');
-            var eventData = {
-                data: datum
-            };
-
-            hoverover.css({position:'absolute'})
-            .html(options.popupTemplate( eventData )).show();
-
-            hoverover.data('width', self.$el.find('.hoverover').width());
-
-            if (options.highlightOnHover) {
-                d3.select(this)
-                .style('fill', options.highlightFillColor)
-                .style('stroke', options.highlightBorderColor)
-                .style('stroke-width', options.highlightBorderWidth)
-                .style('fill-opacity', options.highlightFillOpacity);
-            }
-            self.$el.trigger($.Event("bubble-mouseover"), eventData);
-        })
-        .on('mousemove', function() {
-            self.updateHoverOverPosition(this);
-        })
-        .on('mouseout', function(datum) {
-            self.$el.find('.hoverover').hide();
-            var eventData = {
-                data: datum
-            };
-
-            self.$el.trigger($.Event("bubble-mouseout"), eventData);
-
-            if (options.highlightOnHover) {
-              var el = d3.select(this);
-                el.style('fill', el.attr('data-fill'))
-                  .style('stroke', options.borderColor)
-                  .style('stroke-width', options.borderWidth)
-                  .style('fill-opacity', options.fillOpacity);
-            }
-        })
-        .on('touchstart', function(datum) {
-            self.$el.trigger($.Event("bubble-touchstart"), {data: datum});
-        })
-        .on('click', function(datum) {
-            self.$el.trigger($.Event("bubble-click"), {data: datum});
-        })
         .attr('cx', function(datum) {
             return projection([datum.longitude, datum.latitude])[0];
         })
@@ -127,16 +86,19 @@ var addBubbles = function(bubbles) {
         .attr('class', 'bubble')
         .style('stroke-width', options.borderWidth)
         .attr('fill-opacity', options.fillOpacity)
-        .attr('r', 0)
+        .attr('r', 0)					// start out as a point, expand to big radius
         .transition()
-        .duration(400)
+        .duration(400)					// time to go from point to big radius
         .attr('r', function(datum) {
             return datum.radius;
         })
+        .transition()					// time to go from big radius to normal radius
+        .duration(1000)
+        .attr('r', 6.0)
         .each(function(d){
-            total_edits += 1;
+            total_events += 1;
             edit_times.push(new Date().getTime());
-            if (total_edits > 2) {
+            if (total_events > 2) {
                 var cur = edit_times[edit_times.length - 1];
                 var prev = edit_times[edit_times.length - 2];
                 edit_intervals.push(cur - prev);
@@ -148,27 +110,16 @@ var addBubbles = function(bubbles) {
             var rate_avg = Math.ceil(((s / edit_intervals.length) / 1000) * 10);
             edit_times = edit_times.slice(0, 500);
             edit_intervals = edit_intervals.slice(0, 500);
-            if (total_edits == 1) {
-                $('#edit_counter').html('You have seen <span>' + total_edits + ' edit</span>.');
-            } else if (total_edits == 2) {
-                $('#edit_counter').html('You have seen a total of <span>' + total_edits + ' edits</span>.');
+            if (total_events == 1) {
+                $('#edit_counter').html('You have seen <span>' + total_events + ' event</span>.');
+            } else if (total_events == 2) {
+                $('#edit_counter').html('You have seen a total of <span>' + total_events + ' events</span>.');
             } else{
-                $('#edit_counter').html('You have seen a total of <span>' + total_edits + ' edits</span> at an average interval of <span>' + rate_avg + ' seconds</span>.');
+                $('#edit_counter').html('You have seen a total of <span>' + total_events + ' events</span> at an average interval of <span>' + rate_avg + ' seconds</span>.');
             }
             var x = projection([d.longitude, d.latitude])[0];
             var y = projection([d.longitude, d.latitude])[1];
-            var div = $('<div />').css({
-                                        position:'absolute',
-                                        'top': y + 10,
-                                        'left': x + 10
-                                        })
-                                .addClass('popup-box')
-                                .animate({opacity: 0}, 4000, null, function() {
-                                    this.remove();
-                                });
-
-            div.html(d.page_title + ' <span class="lang">(' + d.lid + ')</span>');
-            $('#map').append(div);
+            // this is where d.pagetitle could be added to a ticker.
         });
 };
 
@@ -191,6 +142,15 @@ wikipediaSocket.init = function(ws_url, lid) {
             connection.onopen = function() {
                 window.console && console.log('Connection open to ' + lid);
                 $('#' + lid + '-status').html('(connected)');
+                if (testJSON == true) { 
+                	setTimeout(function () { connection.send('{ "eventName": "event name 1", "latitude": 37.77523, "longitude": -122.39963, "countryName": "United States" }'); }, 1000);
+                	setTimeout(function () { connection.send('{ "eventName": "event name 2", "latitude": 31.77523, "longitude": -102.39963, "countryName": "United States" }'); }, 2000);
+                	
+                	setTimeout(function () { connection.send('{ "eventName": "event brazil", "latitude": -17.77523, "longitude": -42.39963, "countryName": "Brazil" }'); }, 5000);
+                	setTimeout(function () { connection.send('{ "eventName": "event france", "latitude": 43.77523, "longitude": 4.39963, "countryName": "France" }'); }, 5300);
+                	setTimeout(function () { connection.send('{ "eventName": "event yellowstone", "latitude": 43.79868, "longitude": -110.067902, "countryName": "United States" }'); }, 9000);
+                	setTimeout(function () { connection.send('{ "eventName": "event nyc", "latitude": 40.72468, "longitude": -74.00597, "countryName": "United States" }'); }, 9200);
+                }
             };
 
             connection.onclose = function() {
@@ -209,54 +169,57 @@ wikipediaSocket.init = function(ws_url, lid) {
                     $('#loading').remove();
                 }
                 try {
+                	window.console && console.log(resp.data);
                     data = JSON.parse(resp.data);
                 } catch (e) {
                     window.console && console.log(resp);
                     return;
                 }
                 var fill_key;
-                if (data.is_anon && data.ns === 'Main') {
-                    if (data.change_size > 0) {
-                        fill_key = 'add';
-                    } else {
-                        fill_key = 'subtract';
-                    }
-                    req_url = 'http://freegeoip.net/json/' + data.user;
-                    if (data.geo_ip) {
-                        fgi_resp = data.geo_ip;
+                
+                // this is the key bit where the JSON is converted into a dot.
+                // 6 aug 2013 16h39 kmo
+                window.console && console.log('got message');
+                
+                if (data) {
+                    window.console && console.log('data acquired');
+                    if (data.latitude && data.longitude) {
+                        window.console && console.log('popping a bubble');
                         world_map.options.bubbles = world_map.options.bubbles.slice(-20);
-                        loc_str = fgi_resp.country_name;
+                        
+                        /*loc_str = fgi_resp.country_name;
                         if (fgi_resp.region_name) {
                             loc_str = fgi_resp.region_name + ', ' + loc_str;
                         }
                         if (fgi_resp.city) {
                             loc_str = fgi_resp.city + ' (' + loc_str + ')';
-                        }
-                        log_rc_str = 'Someone in <span class="loc">' + loc_str + '</span> edited "<a href="' + data.url + '" target="_blank">' + data.page_title + '</a>" <span class="lang">(' + lid + ')</span>';
+                        }*/
+                        //log_rc_str = 'Someone in <span class="loc">' + loc_str + '</span> bought tickets to "<a href="' + data.url + '" target="_blank">' + data.page_title + '</a>" <span class="lang">(' + lid + ')</span>';
+                        log_rc_str = 'Someone bought tickets to "<a href="' + data.eid + '" target="_blank">' + data.eventName + '</a>" </span>';
                         log_rc(log_rc_str, RC_LOG_SIZE);
                         //console.log('An editor in ' + loc_str + ' edited "' + data.page_title + '"')
                         $('.bubbles')
                             .animate({opacity: 0,
-                                radius: 10},
+                                radius: 5},
                                 40000,
                                 null,
                                 function(){
                                     this.remove();
                                 });
                         world_map
-                            .addBubbles([{radius: 4,
-                                latitude: fgi_resp.latitude,
-                                longitude: fgi_resp.longitude,
-                                page_title: data.page_title,
-                                fillKey: fill_key,
-                                lid: lid
+                            .addBubbles([{radius: 16,
+                                latitude: data.latitude,
+                                longitude: data.longitude,
+                                page_title: data.eventName,
+                                country_name: data.countryName,
+                                fillKey: "add",
                             }]);
-                        country_hl = highlight_country(fgi_resp.country_name);
+                        country_hl = highlight_country(data.countryName);
 
                         if (!country_hl[0][0]) {
-                            country_hl = highlight_country(country_name_map[fgi_resp.country_name]);
+                            country_hl = highlight_country(country_name_map[data.countryName]);
                             if (!country_hl[0][0] && window.console) {
-                                console.log('Could not highlight country: ' + fgi_resp.country_name);
+                                console.log('Could not highlight country: ' + data.countryName);
                             }
                         }
                     } else {

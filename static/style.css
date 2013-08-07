@@ -4,6 +4,7 @@
 
 body {
     font-family: sans-serif;
+    background-color: #f7f7f7;
 }
 h1 {
     padding: .5em;
@@ -12,33 +13,23 @@ p {
     line-height: 1.5em;
     margin-bottom: .5em;
 }
-a {
-    color: #306596;
-}
-a:hover {
-    color: #cc4731;
-}
+
 label {
     margin-left: .5em;
 }
-.about-link {
-    float: right;
-    font-weight: normal;
-    font-style: normal;
-    font-size: 1.5em;
-    padding-right: 2em;
-    padding-top: 1em;
-}
+
 .wrapper {
+	position: absolute;
+	padding: 0px 0px 0px 0px;
     overflow: hidden; /* To clear contents */
     zoom: 1; /* To fix IE6 bugs with floats */
 }
 .content {
     margin: 1em auto 4em auto;
-    width: 960px;
+    width: 1600px;
     position:relative;
 }
-.popup-box {
+.popup-box {	
     padding: 4px;
     border-radius: 1px;
     background-color: #FFF;
@@ -66,9 +57,10 @@ label {
     margin: 0.5em;
     line-height: 1.5em;
     font-size: .8em;
+    overflow: hidden;
 }
 .rc-list ul {
-    height: 30em;
+    height: 6em;
 }
 .rc-list h3 {
     padding: .5em;
@@ -106,11 +98,7 @@ label {
 .clear br {
     clear: left;
 }
-#header {
-    background: #f8f8f8;
-    margin: 0;
-    border-bottom: 1px solid #d8e6ec;
-}
+
 #edit_counter {
     font-size: 1.5em;
     color: #000;
@@ -119,10 +107,11 @@ label {
     color: #cc4731;
 }
 #map {
-    height: 450px;
-    width: 900;
-    padding: .5em;
+float: left;
+    height: 800px;
+    width: 1600px;
 }
+
 #loading {
     position:absolute;
     top:3em;
