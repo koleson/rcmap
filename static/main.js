@@ -208,10 +208,10 @@ wikipediaSocket.init = function(ws_url, lid) {
                                 });
                         world_map
                             .addBubbles([{radius: 16,
-                                latitude: data.latitude,
-                                longitude: data.longitude,
-                                page_title: data.eventName,
-                                country_name: data.countryName,
+                                latitude: parseFloat(data[0].venue_location[0]),
+                                longitude: parseFloat(data[0].venue_location[1]),
+                                page_title: data[0].name,
+                                country_name: data[0].venue_countryname,
                                 fillKey: "add",
                             }]);
                         country_hl = highlight_country(data.countryName);
